@@ -1,29 +1,67 @@
 # vue-axios-graphql
 
-## Project setup
+## Install
+
+### main.js
+
 ```
-yarn install
+import Vue from "vue";
+const QLClient = require("@dotvirus/vue-axios-graphql");
+
+Vue.use(QLClient, { url: "GRAPHQL_ENDPOINT" });
 ```
 
-### Compiles and hot-reloads for development
+## Nuxt
+
+Create a plugin in plugins/
+
+### plugins/example.js
+
 ```
-yarn run serve
+const { QLClient } = require("@dotvirus/vue-axios-graphql");
+const url = "GRAPHQL_ENDPOINT"
+
+export default (ctx, inject) => {
+  inject("ql", new QLClient(url));
+};
 ```
 
-### Compiles and minifies for production
+The client is now exposed as this.$ql (client-side) and context.app.$ql (server-side).
+
+## Methods
+
+### query({ query, variables })
+
 ```
-yarn run build
+// Query (uses HTTP GET)
+this.$ql.query({
+  query: `
+  {
+    hello
+  }
+  `,
+  variables: {} // Optional if no variables needed
+})
 ```
 
-### Run your tests
+### mutate({ mutation, variables })
+
 ```
-yarn run test
+// Mutation (uses HTTP POST)
+this.$ql.mutate({
+  mutation: `
+  {
+    hello
+  }
+  `,
+  variables: {} // Optional if no variables needed
+})
 ```
 
-### Lints and fixes files
-```
-yarn run lint
-```
+## Options
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+This package offers a wide range of options to customize to your needs
+
+| Name | Description      |
+| ---- | ---------------- |
+| url  | GraphQL endpoint |
