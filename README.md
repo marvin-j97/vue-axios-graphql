@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/%40dotvirus%2Fvue-axios-graphql.svg)](https://badge.fury.io/js/%40dotvirus%2Fvue-axios-graphql)
+
 # vue-axios-graphql
 
 ## Install
