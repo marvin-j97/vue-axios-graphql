@@ -24,7 +24,7 @@ const { AxiosGraphQLClient } = require("@dotvirus/vue-axios-graphql");
 const url = "GRAPHQL_ENDPOINT"
 
 export default (ctx, inject) => {
-  inject("ql", new QLClient(url));
+  inject("ql", new AxiosGraphQLClient(url));
 };
 ```
 
