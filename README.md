@@ -20,7 +20,7 @@ Create a plugin in plugins/
 ### plugins/example.js
 
 ```
-const { QLClient } = require("@dotvirus/vue-axios-graphql");
+const { AxiosGraphQLClient } = require("@dotvirus/vue-axios-graphql");
 const url = "GRAPHQL_ENDPOINT"
 
 export default (ctx, inject) => {
