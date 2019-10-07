@@ -28,6 +28,17 @@ export default (ctx, inject) => {
 };
 ```
 
+Register in nuxt config 
+
+### nuxt.config.js
+```
+export default {
+  // ...
+  plugins: ["~/plugins/example.js"],
+  // ...
+}
+```
+
 The client is now exposed as this.$ql (client-side) and context.app.$ql (server-side).
 
 ## Methods
