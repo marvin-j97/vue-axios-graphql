@@ -19,5 +19,11 @@
   "repository": {
     "type" : "git",
     "url" : "https://github.com/dotvirus/vue-axios-graphql.git"
-  }
+  },
+  "keywords": [
+    "vue",
+    "axios",
+    "graphql",
+    "nuxt"
+  ]
 }
