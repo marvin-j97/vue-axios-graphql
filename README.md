@@ -78,3 +78,13 @@ This package offers a wide range of options to customize to your needs
 | Name | Description      |
 | ---- | ---------------- |
 | url  | GraphQL endpoint |
+
+## Type declaration
+
+```
+declare module "vue/types/vue" {
+  interface Vue {
+    $ql: AxiosGraphQLClient;
+  }
+}
+```

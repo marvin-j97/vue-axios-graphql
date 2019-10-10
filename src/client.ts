@@ -30,6 +30,10 @@ export default class AxiosGraphQLClient {
     }
   }
 
+  async mutate(opts: IMutationOptions) {
+    this.mutation(opts);
+  }
+
   async mutation({ mutation, variables }: IMutationOptions) {
     let mutationString = mutation;
 
