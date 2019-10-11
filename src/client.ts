@@ -43,12 +43,18 @@ export default class AxiosGraphQLClient {
     }
 
     try {
-      const response = await Axios.post(this.url, {
-        params: {
-          mutation: mutationString,
+      const response = await Axios.post(
+        this.url,
+        {
+          query: mutationString,
           variables: variables || {}
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
         }
-      });
+      );
 
       return response.data;
     } catch (error) {
