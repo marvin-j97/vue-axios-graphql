@@ -25,6 +25,8 @@ export default class AxiosGraphQLClient {
         ...(options ? options.config : {})
       });
 
+      if (response.data.errors) throw response.data.errors;
+
       return response.data;
     } catch (error) {
       throw error;
@@ -58,6 +60,8 @@ export default class AxiosGraphQLClient {
           ...(options ? options.config : {})
         }
       );
+
+      if (response.data.errors) throw response.data.errors;
 
       return response.data;
     } catch (error) {
