@@ -8,7 +8,7 @@ export default class AxiosGraphQLClient {
     this.url = url;
   }
 
-  async query({ query, variables }: IQueryOptions) {
+  async query({ query, variables, options }: IQueryOptions) {
     let queryString = query;
 
     // gql tag -> string conversion
@@ -21,7 +21,8 @@ export default class AxiosGraphQLClient {
         params: {
           query: queryString,
           variables: variables || {}
-        }
+        },
+        ...(options ? options.config : {})
       });
 
       return response.data;
@@ -34,7 +35,7 @@ export default class AxiosGraphQLClient {
     this.mutation(opts);
   }
 
-  async mutation({ mutation, variables }: IMutationOptions) {
+  async mutation({ mutation, variables, options }: IMutationOptions) {
     let mutationString = mutation;
 
     // gql tag -> string conversion
@@ -51,8 +52,10 @@ export default class AxiosGraphQLClient {
         },
         {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+            ...(options ? options.headers : {})
+          },
+          ...(options ? options.config : {})
         }
       );
 
