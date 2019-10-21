@@ -27,7 +27,9 @@ class AxiosGraphQLClient {
                 const response = yield axios_1.default.get(this.url, Object.assign({ params: {
                         query: queryString,
                         variables: variables || {}
-                    } }, (options ? options.config : {})));
+                    } }, (options ? options : {})));
+                if (response.data.errors)
+                    throw response.data.errors;
                 return response.data;
             }
             catch (error) {
@@ -37,7 +39,7 @@ class AxiosGraphQLClient {
     }
     mutate(opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.mutation(opts);
+            return this.mutation(opts);
         });
     }
     mutation({ mutation, variables, options }) {
@@ -51,6 +53,8 @@ class AxiosGraphQLClient {
                     query: mutationString,
                     variables: variables || {}
                 }, Object.assign({ headers: Object.assign({ "Content-Type": "application/json" }, (options ? options.headers : {})) }, (options ? options.config : {})));
+                if (response.data.errors)
+                    throw response.data.errors;
                 return response.data;
             }
             catch (error) {

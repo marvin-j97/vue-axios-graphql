@@ -1,6 +1,6 @@
 {
   "name": "@dotvirus/vue-axios-graphql",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Minimal Axios GraphQL client for Vue/Nuxt",
   "main": "dist/index.js",
   "scripts": {

@@ -4,17 +4,15 @@ export interface HashMap<T> {
 }
 export interface IQueryOptions {
     query: string | HashMap<any>;
-    variables: HashMap<any>;
-    options?: {
-        config?: Partial<Omit<AxiosRequestConfig, "params">>;
-    };
+    variables?: HashMap<any>;
+    options?: Partial<Omit<AxiosRequestConfig, "params">>;
 }
 export interface IMutationOptions {
     mutation: string | HashMap<any>;
     variables?: HashMap<any>;
     options?: {
         config?: Partial<Omit<AxiosRequestConfig, "headers">>;
-        headers?: any;
+        headers?: HashMap<string>;
     };
 }
 export interface IInstallOptions {

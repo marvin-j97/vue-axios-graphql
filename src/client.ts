@@ -22,7 +22,7 @@ export default class AxiosGraphQLClient {
           query: queryString,
           variables: variables || {}
         },
-        ...(options ? options.config : {})
+        ...(options ? options : {})
       });
 
       if (response.data.errors) throw response.data.errors;
@@ -34,7 +34,7 @@ export default class AxiosGraphQLClient {
   }
 
   async mutate(opts: IMutationOptions) {
-    this.mutation(opts);
+    return this.mutation(opts);
   }
 
   async mutation({ mutation, variables, options }: IMutationOptions) {
