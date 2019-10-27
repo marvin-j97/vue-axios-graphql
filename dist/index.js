@@ -7,6 +7,6 @@ const client_1 = __importDefault(require("./client"));
 exports.AxiosGraphQLClient = client_1.default;
 exports.default = {
     install(Vue, options) {
-        Vue.prototype.$ql = new client_1.default(options.url);
+        Vue.prototype.$ql = new client_1.default(options);
     }
 };

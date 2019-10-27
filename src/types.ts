@@ -7,7 +7,9 @@ export interface HashMap<T> {
 export interface IQueryOptions {
   query: string | HashMap<any>;
   variables?: HashMap<any>;
-  options?: Partial<Omit<AxiosRequestConfig, "params">>;
+  options?: {
+    config: Partial<Omit<AxiosRequestConfig, "params">>;
+  };
 }
 
 export interface IMutationOptions {
@@ -19,6 +21,10 @@ export interface IMutationOptions {
   };
 }
 
-export interface IInstallOptions {
-  url: string; // GraphQL endpoint
+export interface IAxiosGraphQLClientOptions {
+  transform: (str: string) => string;
 }
+
+export type TInstallOptions = { url: string } & Partial<
+  IAxiosGraphQLClientOptions
+>;

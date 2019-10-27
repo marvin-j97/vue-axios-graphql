@@ -1,19 +1,28 @@
 import Axios from "axios";
-import { IQueryOptions, IMutationOptions } from "./types";
+import { TInstallOptions, IQueryOptions, IMutationOptions } from "./types";
 
 export default class AxiosGraphQLClient {
   url: string;
+  transform?: (str: string) => string;
 
-  constructor(url: string) {
-    this.url = url;
+  constructor(options: string | TInstallOptions) {
+    if (typeof options == "string") this.url = options;
+    else {
+      this.url = options.url;
+      this.transform = options.transform;
+    }
   }
 
   async query({ query, variables, options }: IQueryOptions) {
-    let queryString = query;
-
     // gql tag -> string conversion
     if (typeof query != "string") {
-      queryString = query.loc && query.loc.source.body;
+      var queryString = (query.loc && query.loc.source.body) as string;
+    } else {
+      var queryString = query;
+    }
+
+    if (this.transform) {
+      queryString = this.transform(queryString);
     }
 
     try {
@@ -38,11 +47,15 @@ export default class AxiosGraphQLClient {
   }
 
   async mutation({ mutation, variables, options }: IMutationOptions) {
-    let mutationString = mutation;
-
     // gql tag -> string conversion
     if (typeof mutation != "string") {
-      mutationString = mutation.loc && mutation.loc.source.body;
+      var mutationString = (mutation.loc && mutation.loc.source.body) as string;
+    } else {
+      var mutationString = mutation;
+    }
+
+    if (this.transform) {
+      mutationString = this.transform(mutationString);
     }
 
     try {

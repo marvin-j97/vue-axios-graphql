@@ -14,14 +14,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 class AxiosGraphQLClient {
-    constructor(url) {
-        this.url = url;
+    constructor(options) {
+        if (typeof options == "string")
+            this.url = options;
+        else {
+            this.url = options.url;
+            this.transform = options.transform;
+        }
     }
     query({ query, variables, options }) {
         return __awaiter(this, void 0, void 0, function* () {
-            let queryString = query;
             if (typeof query != "string") {
-                queryString = query.loc && query.loc.source.body;
+                var queryString = (query.loc && query.loc.source.body);
+            }
+            else {
+                var queryString = query;
+            }
+            if (this.transform) {
+                queryString = this.transform(queryString);
             }
             try {
                 const response = yield axios_1.default.get(this.url, Object.assign({ params: {
@@ -44,9 +54,14 @@ class AxiosGraphQLClient {
     }
     mutation({ mutation, variables, options }) {
         return __awaiter(this, void 0, void 0, function* () {
-            let mutationString = mutation;
             if (typeof mutation != "string") {
-                mutationString = mutation.loc && mutation.loc.source.body;
+                var mutationString = (mutation.loc && mutation.loc.source.body);
+            }
+            else {
+                var mutationString = mutation;
+            }
+            if (this.transform) {
+                mutationString = this.transform(mutationString);
             }
             try {
                 const response = yield axios_1.default.post(this.url, {
