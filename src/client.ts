@@ -31,7 +31,7 @@ export default class AxiosGraphQLClient {
           query: queryString,
           variables: variables || {}
         },
-        ...(options ? options : {})
+        ...(options ? options.config : {})
       });
 
       if (response.data.errors) throw response.data.errors;

@@ -37,7 +37,7 @@ class AxiosGraphQLClient {
                 const response = yield axios_1.default.get(this.url, Object.assign({ params: {
                         query: queryString,
                         variables: variables || {}
-                    } }, (options ? options : {})));
+                    } }, (options ? options.config : {})));
                 if (response.data.errors)
                     throw response.data.errors;
                 return response.data;
