@@ -1,5 +1,18 @@
-import Axios from "axios";
+import Axios, { AxiosError, AxiosResponse } from "axios";
 import { TInstallOptions, IQueryOptions, IMutationOptions } from "./types";
+
+export type DefaultGraphQLError = { message: string };
+
+export class AxiosQLError<T = DefaultGraphQLError> extends Error {
+  axios: AxiosError | null;
+  graphql: T[] = [];
+
+  constructor(axios: AxiosError | null, graphql: T[]) {
+    super();
+    this.axios = axios;
+    this.graphql = graphql;
+  }
+}
 
 export default class AxiosGraphQLClient {
   url: string;
@@ -25,21 +38,24 @@ export default class AxiosGraphQLClient {
       queryString = this.transform(queryString);
     }
 
+    let response!: AxiosResponse;
+
     try {
-      const response = await Axios.get(this.url, {
+      response = await Axios.get(this.url, {
         params: {
           query: queryString,
           variables: variables || {}
         },
         ...(options ? options.config : {})
       });
-
-      if (response.data.errors) throw response.data.errors;
-
-      return response.data;
     } catch (error) {
-      throw error;
+      throw new AxiosQLError(error, []);
     }
+
+    if (response.data.errors)
+      throw new AxiosQLError(null, response.data.errors);
+
+    return response.data;
   }
 
   async mutate(opts: IMutationOptions) {
@@ -58,8 +74,10 @@ export default class AxiosGraphQLClient {
       mutationString = this.transform(mutationString);
     }
 
+    let response!: AxiosResponse;
+
     try {
-      const response = await Axios.post(
+      response = await Axios.post(
         this.url,
         {
           query: mutationString,
@@ -73,12 +91,13 @@ export default class AxiosGraphQLClient {
           ...(options ? options.config : {})
         }
       );
-
-      if (response.data.errors) throw response.data.errors;
-
-      return response.data;
     } catch (error) {
-      throw error;
+      throw new AxiosQLError(error, []);
     }
+
+    if (response.data.errors)
+      throw new AxiosQLError(null, response.data.errors);
+
+    return response.data;
   }
 }

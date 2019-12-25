@@ -1,9 +1,13 @@
 {
   "name": "@dotvirus/vue-axios-graphql",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Minimal Axios GraphQL client for Vue/Nuxt",
   "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
+    "deploy": "npm run test && npm publish --access public",
     "test": "mocha --bail --exit -r ts-node/register test/index.ts",
     "build": "tsc"
   },
