@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
+const types_1 = require("./types");
 class AxiosGraphQLClient {
     constructor(options) {
         if (typeof options == "string")
@@ -33,18 +34,19 @@ class AxiosGraphQLClient {
             if (this.transform) {
                 queryString = this.transform(queryString);
             }
+            let response;
             try {
-                const response = yield axios_1.default.get(this.url, Object.assign({ params: {
+                response = yield axios_1.default.get(this.url, Object.assign({ params: {
                         query: queryString,
                         variables: variables || {}
                     } }, (options ? options.config : {})));
-                if (response.data.errors)
-                    throw response.data.errors;
-                return response.data;
             }
             catch (error) {
-                throw error;
+                throw new types_1.AxiosQLError(error, []);
             }
+            if (response.data.errors)
+                throw new types_1.AxiosQLError(null, response.data.errors);
+            return response.data;
         });
     }
     mutate(opts) {
@@ -63,18 +65,19 @@ class AxiosGraphQLClient {
             if (this.transform) {
                 mutationString = this.transform(mutationString);
             }
+            let response;
             try {
-                const response = yield axios_1.default.post(this.url, {
+                response = yield axios_1.default.post(this.url, {
                     query: mutationString,
                     variables: variables || {}
                 }, Object.assign({ headers: Object.assign({ "Content-Type": "application/json" }, (options ? options.headers : {})) }, (options ? options.config : {})));
-                if (response.data.errors)
-                    throw response.data.errors;
-                return response.data;
             }
             catch (error) {
-                throw error;
+                throw new types_1.AxiosQLError(error, []);
             }
+            if (response.data.errors)
+                throw new types_1.AxiosQLError(null, response.data.errors);
+            return response.data;
         });
     }
 }

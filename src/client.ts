@@ -1,18 +1,10 @@
-import Axios, { AxiosError, AxiosResponse } from "axios";
-import { TInstallOptions, IQueryOptions, IMutationOptions } from "./types";
-
-export type DefaultGraphQLError = { message: string };
-
-export class AxiosQLError<T = DefaultGraphQLError> extends Error {
-  axios: AxiosError | null;
-  graphql: T[] = [];
-
-  constructor(axios: AxiosError | null, graphql: T[]) {
-    super();
-    this.axios = axios;
-    this.graphql = graphql;
-  }
-}
+import Axios, { AxiosResponse } from "axios";
+import {
+  TInstallOptions,
+  IQueryOptions,
+  IMutationOptions,
+  AxiosQLError
+} from "./types";
 
 export default class AxiosGraphQLClient {
   url: string;
