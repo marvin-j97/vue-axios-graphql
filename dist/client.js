@@ -42,7 +42,7 @@ class AxiosGraphQLClient {
                     } }, (options ? options.config : {})));
             }
             catch (error) {
-                throw new types_1.AxiosQLError(error, []);
+                throw new types_1.AxiosQLError(error, error.response.data.errors);
             }
             if (response.data.errors)
                 throw new types_1.AxiosQLError(null, response.data.errors);
@@ -73,7 +73,7 @@ class AxiosGraphQLClient {
                 }, Object.assign({ headers: Object.assign({ "Content-Type": "application/json" }, (options ? options.headers : {})) }, (options ? options.config : {})));
             }
             catch (error) {
-                throw new types_1.AxiosQLError(error, []);
+                throw new types_1.AxiosQLError(error, error.response.data.errors);
             }
             if (response.data.errors)
                 throw new types_1.AxiosQLError(null, response.data.errors);
