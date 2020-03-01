@@ -41,7 +41,7 @@ export default class AxiosGraphQLClient {
         ...(options ? options.config : {})
       });
     } catch (error) {
-      throw new AxiosQLError(error, []);
+      throw new AxiosQLError(error, error.response.data.errors);
     }
 
     if (response.data.errors)
@@ -84,7 +84,7 @@ export default class AxiosGraphQLClient {
         }
       );
     } catch (error) {
-      throw new AxiosQLError(error, []);
+      throw new AxiosQLError(error, error.response.data.errors);
     }
 
     if (response.data.errors)
