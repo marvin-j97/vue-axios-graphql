@@ -42,6 +42,8 @@ class AxiosGraphQLClient {
                     } }, (options ? options.config : {})));
             }
             catch (error) {
+                if (!error.response)
+                    throw new types_1.AxiosQLError(error, null);
                 throw new types_1.AxiosQLError(error, error.response.data.errors);
             }
             if (response.data.errors)

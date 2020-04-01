@@ -12,6 +12,24 @@ describe("Vue plugin", () => {
   });
 });
 
+describe("No response", () => {
+  it("Should give error", async () => {
+    const client = new QLClient("https://localhost:0000");
+    let hadError = false;
+    try {
+      await client.query({
+        query: `
+        {
+        }
+      `
+      });
+    } catch (error) {
+      hadError = true;
+    }
+    expect(hadError).to.be.true;
+  });
+});
+
 describe("Query Pikachu", () => {
   it("Should return Pikachu", async () => {
     const client = new QLClient("https://graphql-pokemon.now.sh");

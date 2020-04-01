@@ -41,6 +41,7 @@ export default class AxiosGraphQLClient {
         ...(options ? options.config : {})
       });
     } catch (error) {
+      if (!error.response) throw new AxiosQLError(error, null);
       throw new AxiosQLError(error, error.response.data.errors);
     }
 

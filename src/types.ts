@@ -33,9 +33,9 @@ export type DefaultGraphQLError = { message: string };
 
 export class AxiosQLError<T = DefaultGraphQLError> extends Error {
   axios: AxiosError | null;
-  graphql: T[] = [];
+  graphql: T[] | null = [];
 
-  constructor(axios: AxiosError | null, graphql: T[]) {
+  constructor(axios: AxiosError | null, graphql: T[] | null) {
     super();
     this.axios = axios;
     this.graphql = graphql;

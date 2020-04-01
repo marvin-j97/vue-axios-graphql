@@ -28,6 +28,6 @@ export declare type DefaultGraphQLError = {
 };
 export declare class AxiosQLError<T = DefaultGraphQLError> extends Error {
     axios: AxiosError | null;
-    graphql: T[];
-    constructor(axios: AxiosError | null, graphql: T[]);
+    graphql: T[] | null;
+    constructor(axios: AxiosError | null, graphql: T[] | null);
 }
