@@ -3,7 +3,7 @@ import {
   TInstallOptions,
   IQueryOptions,
   IMutationOptions,
-  AxiosQLError
+  AxiosQLError,
 } from "./types";
 
 export default class AxiosGraphQLClient {
@@ -36,13 +36,13 @@ export default class AxiosGraphQLClient {
       response = await Axios.get(this.url, {
         params: {
           query: queryString,
-          variables: variables || {}
+          variables: variables || {},
         },
-        ...(options ? options.config : {})
+        ...(options ? options.config : {}),
       });
     } catch (error) {
       if (!error.response) throw new AxiosQLError(error, null);
-      throw new AxiosQLError(error, error.response.data.errors);
+      throw new AxiosQLError(error, error.response.data.errors || null);
     }
 
     if (response.data.errors)
@@ -74,18 +74,19 @@ export default class AxiosGraphQLClient {
         this.url,
         {
           query: mutationString,
-          variables: variables || {}
+          variables: variables || {},
         },
         {
           headers: {
             "Content-Type": "application/json",
-            ...(options ? options.headers : {})
+            ...(options ? options.headers : {}),
           },
-          ...(options ? options.config : {})
+          ...(options ? options.config : {}),
         }
       );
     } catch (error) {
-      throw new AxiosQLError(error, error.response.data.errors);
+      if (!error.response) throw new AxiosQLError(error, null);
+      throw new AxiosQLError(error, error.response.data.errors || null);
     }
 
     if (response.data.errors)

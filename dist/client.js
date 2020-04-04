@@ -38,13 +38,13 @@ class AxiosGraphQLClient {
             try {
                 response = yield axios_1.default.get(this.url, Object.assign({ params: {
                         query: queryString,
-                        variables: variables || {}
+                        variables: variables || {},
                     } }, (options ? options.config : {})));
             }
             catch (error) {
                 if (!error.response)
                     throw new types_1.AxiosQLError(error, null);
-                throw new types_1.AxiosQLError(error, error.response.data.errors);
+                throw new types_1.AxiosQLError(error, error.response.data.errors || null);
             }
             if (response.data.errors)
                 throw new types_1.AxiosQLError(null, response.data.errors);
@@ -71,11 +71,13 @@ class AxiosGraphQLClient {
             try {
                 response = yield axios_1.default.post(this.url, {
                     query: mutationString,
-                    variables: variables || {}
+                    variables: variables || {},
                 }, Object.assign({ headers: Object.assign({ "Content-Type": "application/json" }, (options ? options.headers : {})) }, (options ? options.config : {})));
             }
             catch (error) {
-                throw new types_1.AxiosQLError(error, error.response.data.errors);
+                if (!error.response)
+                    throw new types_1.AxiosQLError(error, null);
+                throw new types_1.AxiosQLError(error, error.response.data.errors || null);
             }
             if (response.data.errors)
                 throw new types_1.AxiosQLError(null, response.data.errors);
